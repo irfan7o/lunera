@@ -1,101 +1,119 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Star, Heart, ShoppingCart } from 'phosphor-react'
 import productsData from '@/data/products.json'
+import useEmblaCarousel from 'embla-carousel-react'
+import { useCallback, useEffect, useState } from 'react'
+import { CaretLeft, CaretRight, Star } from 'phosphor-react'
 
-const ProductCard = ({ product, index }: { product: any, index: number }) => {
+const ProductCard = ({ product }: { product: any }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
-    >
+    <div className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group h-full">
       <div className="relative">
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        
-        {/* Badge */}
-        <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
-          {product.badge}
+
+        {/* TOP ribbon */}
+        <div className="absolute left-3 top-3">
+          <div className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">TOP</div>
         </div>
-        
-        {/* Discount */}
-        <div className="absolute top-3 right-3 bg-yellow-500 text-black px-2 py-1 rounded-full text-xs font-bold">
-          -{product.discount}
+
+        {/* Discount badge */}
+        <div className="absolute right-3 top-3">
+          <div className="bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded">-{product.discount}</div>
         </div>
-        
-        {/* Heart icon */}
-        <button className="absolute top-12 right-3 p-2 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-red-50">
-          <Heart size={16} className="text-gray-600 hover:text-red-500" />
-        </button>
       </div>
-      
+
       <div className="p-4">
-        <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2">{product.name}</h3>
-        
-        {/* Features */}
-        <div className="flex flex-wrap gap-1 mb-2">
-          {product.features.slice(0, 2).map((feature: string) => (
-            <span key={feature} className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded">
-              {feature}
-            </span>
-          ))}
-        </div>
-        
+        <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 min-h-[3.25rem]">{product.name}</h3>
+
         {/* Rating */}
-        <div className="flex items-center gap-1 mb-3">
-          <div className="flex text-yellow-400">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} size={16} weight={i < Math.floor(product.rating) ? 'fill' : 'regular'} />
-            ))}
-          </div>
-          <span className="text-sm text-gray-600">({product.reviews})</span>
+        <div className="flex items-center gap-2 text-yellow-400 mb-2">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} size={16} weight={i < Math.round(product.rating) ? 'fill' : 'regular'} />
+          ))}
+          <span className="text-xs text-gray-500">({product.reviews})</span>
         </div>
-        
+
         {/* Price */}
-        <div className="mb-4">
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-red-600">{product.price}</span>
-            <span className="text-sm text-gray-400 line-through">{product.originalPrice}</span>
-          </div>
+        <div className="flex items-center gap-2">
+          <span className="text-lg font-bold text-red-600">{product.price}</span>
+          <span className="text-sm text-gray-400 line-through">{product.originalPrice}</span>
         </div>
-        
-        {/* Add to cart button */}
-        <button className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors duration-300">
-          <ShoppingCart size={16} />
-          Add to Cart
-        </button>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
 export default function ProductGrid() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    dragFree: true,
+    loop: false,
+    skipSnaps: false,
+  })
+
+  const [prevEnabled, setPrevEnabled] = useState(false)
+  const [nextEnabled, setNextEnabled] = useState(false)
+
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi])
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi])
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setPrevEnabled(emblaApi.canScrollPrev())
+    setNextEnabled(emblaApi.canScrollNext())
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    emblaApi.on('select', onSelect)
+    emblaApi.on('reInit', onSelect)
+  }, [emblaApi, onSelect])
+
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Best Seller</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Discover our most popular vacuum cleaners trusted by thousands of customers
-          </p>
+        <div className="flex items-end justify-between mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Best Seller</h2>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {productsData.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} />
-          ))}
-        </div>
-        
-        <div className="text-center mt-8">
-          <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-300">
-            View All Products
-          </button>
+        <div className="relative">
+          {/* Slider viewport */}
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex gap-4">
+              {productsData.map((product) => (
+                <div
+                  key={product.id}
+                  className="flex-[0_0_80%] sm:flex-[0_0_50%] md:flex-[0_0_33.333%] lg:flex-[0_0_25%] xl:flex-[0_0_20%]"
+                >
+                  <ProductCard product={product} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Overlay arrows centered on the slider, hide when at edges */}
+          {prevEnabled && (
+            <button
+              onClick={scrollPrev}
+              aria-label="Previous"
+              className="absolute -left-5 md:-left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 grid place-items-center rounded-full bg-white border shadow-lg hover:bg-white"
+            >
+              <CaretLeft size={20} />
+            </button>
+          )}
+          {nextEnabled && (
+            <button
+              onClick={scrollNext}
+              aria-label="Next"
+              className="absolute -right-5 md:-right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 grid place-items-center rounded-full bg-white border shadow-lg hover:bg-white"
+            >
+              <CaretRight size={20} />
+            </button>
+          )}
         </div>
       </div>
     </section>
