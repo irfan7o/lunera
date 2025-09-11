@@ -91,13 +91,14 @@ export default function ProductExperience() {
         </div>
         <div className="relative">
           <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-5 md:gap-5 pr-6">
+            {/* Maintain gap while ensuring exactly 3 full cards visible at lg by reducing flex-basis via calc */}
+            <div className="flex gap-5 md:gap-5">
               {ITEMS.map((item) => (
                 <div
                   key={item.id}
-                  className="flex-[0_0_90%] sm:flex-[0_0_60%] md:flex-[0_0_45%] lg:flex-[0_0_32%]"
+                  className="flex-[0_0_90%] sm:flex-[0_0_60%] md:flex-[0_0_45%] lg:flex-none lg:[flex-basis:calc((100%-40px)/3)]"
                 >
-                  <div className="relative rounded-2xl overflow-hidden h-48 sm:h-52 md:h-56 bg-gray-200 group">
+                  <div className="relative rounded-2xl overflow-hidden h-48 sm:h-52 md:h-56 lg:h-60 bg-gray-200 group">
                     <img
                       src={item.image}
                       alt={item.title}
