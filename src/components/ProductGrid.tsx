@@ -35,12 +35,12 @@ const ProductCard = ({ product }: { product: any }) => {
 
       <div className="mt-3 text-left space-y-2.5">
         {/* Name/description two lines */}
-        <h3 className="text-[16px] leading-[22px] font-medium text-gray-900 line-clamp-2">
+        <h3 className="text-[16px] leading-[22px] font-medium text-[#111] line-clamp-2">
           {product.name}
         </h3>
 
         {/* Price main */}
-        <div className="text-[#111111] text-[18px] leading-tight font-bold">
+        <div className="text-[#111] text-[18px] leading-tight font-bold">
           {product.price}
         </div>
 
@@ -70,7 +70,9 @@ const ProductCard = ({ product }: { product: any }) => {
         {/* Brand verified */}
         <div className="flex items-center gap-2 text-sm text-gray-700">
           <span>{product.brand ?? `${siteConfig.name} Indonesia`}</span>
-          <CheckCircle size={14} className="text-blue-500" weight="fill" />
+          <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white text-[10px] font-bold">
+            ✓
+          </span>
         </div>
       </div>
     </div>

@@ -8,15 +8,53 @@ import { CaretLeft, CaretRight, Star, CheckCircle } from "phosphor-react";
 type Brand = {
   key: string;
   label: string;
-  color: string; // bg color for avatar circle
+  color: string; // accent color (fallback)
+  logo: string; // path to logo image in /assets/brands
+  rating: number;
+  reviews: number;
 };
 
 const BRANDS: Brand[] = [
-  { key: "tineco", label: "Tineco", color: "bg-blue-600" },
-  { key: "ecovacs", label: "Ecovacs", color: "bg-sky-500" },
-  { key: "laifen", label: "Laifen", color: "bg-rose-200" },
-  { key: "yoniev", label: "Yoniev", color: "bg-teal-500" },
-  { key: "kans", label: "Kans", color: "bg-red-500" },
+  {
+    key: "tineco",
+    label: "Tineco",
+    color: "#052E73",
+    logo: "/assets/brands/tineco.png",
+    rating: 4.7,
+    reviews: 1780,
+  },
+  {
+    key: "ecovacs",
+    label: "Ecovacs",
+    color: "#1F2B3A",
+    logo: "/assets/brands/ecovacs.png",
+    rating: 4.6,
+    reviews: 940,
+  },
+  {
+    key: "laifen",
+    label: "Laifen",
+    color: "#183E6B",
+    logo: "/assets/brands/laifen.png",
+    rating: 4.8,
+    reviews: 1220,
+  },
+  {
+    key: "yoniev",
+    label: "Yoniev",
+    color: "#095B53",
+    logo: "/assets/brands/yoniev.png",
+    rating: 4.5,
+    reviews: 680,
+  },
+  {
+    key: "kans",
+    label: "Kans",
+    color: "#7A0A0A",
+    logo: "/assets/brands/kans.png",
+    rating: 4.7,
+    reviews: 1780,
+  },
 ];
 
 // Temporary mapping since products don't have a brand field.
@@ -38,10 +76,10 @@ function ProductCard({ product }: { product: any }) {
         </div>
       </div>
       <div className="mt-3 text-left space-y-2">
-        <h3 className="text-[16px] leading-[22px] font-medium text-gray-900 line-clamp-2">
+        <h3 className="text-[16px] leading-[22px] font-medium text-[#111] line-clamp-2">
           {product.name}
         </h3>
-        <div className="text-[#111111] text-[18px] leading-tight font-bold">
+        <div className="text-[#111] text-[18px] leading-tight font-bold">
           {product.price}
         </div>
         <div className="flex items-center gap-2">
@@ -64,8 +102,11 @@ function ProductCard({ product }: { product: any }) {
           ) : null}
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-700">
-          <span>{product.brand ?? "Mazuta Indonesia"}</span>
-          <CheckCircle size={14} className="text-blue-500" weight="fill" />
+          <span>{product.brand ?? "Lunera Indonesia"}</span>
+          {/* Placeholder for Instagram-like verified icon (using blue circle with check) */}
+          <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white text-[10px] font-bold">
+            ✓
+          </span>
         </div>
       </div>
     </div>
@@ -113,14 +154,36 @@ function BrandRow({ brand }: { brand: Brand }) {
   return (
     <div className="py-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
           <div
-            className={`w-7 h-7 rounded-full ${brand.color} grid place-items-center text-white text-xs font-bold`}
+            className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden"
+            style={{ backgroundColor: brand.color }}
           >
-            {brand.label[0]}
+            <img
+              src={brand.logo}
+              alt={brand.label}
+              className="w-8 h-8 object-contain"
+            />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900">{brand.label}</h3>
+          <div className="flex flex-col">
+            <h3 className="text-base font-medium text-[#111] leading-none mb-1">
+              {brand.label}
+            </h3>
+            <div className="flex items-center gap-1 text-xs text-gray-700">
+              <span className="inline-flex items-center gap-1">
+                <svg
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-3.5 h-3.5 text-yellow-400"
+                >
+                  <path d="M10 15.27 16.18 19l-1.64-7.03L20 7.24l-7.19-.61L10 0 7.19 6.63 0 7.24l5.46 4.73L3.82 19z" />
+                </svg>
+                <span className="font-medium">{brand.rating.toFixed(1)}</span>
+              </span>
+              <span className="text-gray-400">({brand.reviews})</span>
+            </div>
+          </div>
         </div>
         <button className="text-sm text-gray-500 hover:text-gray-700">
           See All
@@ -181,7 +244,7 @@ export default function BrandProducts() {
         <div className="flex flex-wrap gap-2 mb-4">
           <button
             onClick={() => setActive("all")}
-            className={`px-4 py-2 rounded-xl border text-sm ${
+            className={`px-4 py-2 rounded-md border text-sm ${
               active === "all"
                 ? "bg-black text-white border-black"
                 : "bg-white text-gray-700"
@@ -193,7 +256,7 @@ export default function BrandProducts() {
             <button
               key={b.key}
               onClick={() => setActive(b.key)}
-              className={`px-4 py-2 rounded-xl border text-sm ${
+              className={`px-4 py-2 rounded-md border text-sm ${
                 active === b.key
                   ? "bg-black text-white border-black"
                   : "bg-white text-gray-700"

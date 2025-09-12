@@ -62,19 +62,20 @@ export default function Footer() {
     setEmail("");
   };
   return (
-    <footer className="bg-white text-gray-800 border-t border-gray-200">
+    <footer
+      className="bg-white border-t border-gray-200"
+      style={{ color: "#6D7583" }}
+    >
       <div className="container mx-auto px-4 py-14">
         <div className="flex flex-col lg:flex-row gap-10 pb-12 border-b border-gray-200">
           <div className="flex-1 space-y-5 min-w-[260px]">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold tracking-tight text-red-500">
-                mazuta
-              </span>
-              <span className="text-xs font-medium px-2 py-0.5 rounded bg-red-50 text-red-600">
-                ecommerce
-              </span>
+            <div className="flex items-center">
+              <img src="/assets/logo.svg" alt="Lunera" className="h-8 w-auto" />
             </div>
-            <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
+            <p
+              className="text-sm leading-relaxed max-w-sm"
+              style={{ color: "#6D7583" }}
+            >
               We breathe technology and craft delightful commerce experiences.
               Discover premium home & lifestyle products with trusted service.
             </p>
@@ -96,10 +97,13 @@ export default function Footer() {
             </div>
           </div>
           <div className="w-full max-w-md">
-            <h4 className="text-sm font-semibold text-gray-900 mb-3">
+            <h4
+              className="text-sm font-semibold mb-3"
+              style={{ color: "#111" }}
+            >
               Stay in the loop
             </h4>
-            <p className="text-gray-500 text-sm mb-4">
+            <p className="text-sm mb-4" style={{ color: "#6D7583" }}>
               Get updates on fresh drops, special deals & curated picks.
             </p>
             <form onSubmit={submit} className="flex items-stretch gap-2">
@@ -114,7 +118,8 @@ export default function Footer() {
                   type="email"
                   required
                   placeholder="Email address"
-                  className="w-full h-11 pl-9 pr-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500/40 focus:border-red-500 text-sm placeholder:text-gray-400"
+                  className="w-full h-11 pl-9 pr-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500/40 text-sm placeholder:text-gray-400"
+                  style={{ backgroundColor: "#F3F3F6", border: "none" }}
                 />
               </div>
               <button
@@ -132,7 +137,10 @@ export default function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 py-12 border-b border-gray-200">
           {GROUPS.map((g) => (
             <div key={g.title} className="space-y-4">
-              <h5 className="text-sm font-semibold tracking-wide text-gray-900">
+              <h5
+                className="text-sm font-semibold tracking-wide"
+                style={{ color: "#111" }}
+              >
                 {g.title}
               </h5>
               <ul className="space-y-2">
@@ -140,7 +148,8 @@ export default function Footer() {
                   <li key={l}>
                     <a
                       href="#"
-                      className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                      className="text-sm transition-colors"
+                      style={{ color: "#6D7583" }}
                     >
                       {l}
                     </a>
@@ -150,7 +159,10 @@ export default function Footer() {
             </div>
           ))}
           <div className="space-y-4 col-span-2 sm:col-span-1">
-            <h5 className="text-sm font-semibold tracking-wide text-gray-900">
+            <h5
+              className="text-sm font-semibold tracking-wide"
+              style={{ color: "#111" }}
+            >
               Contact
             </h5>
             <div className="space-y-3 text-sm text-gray-500">
@@ -172,7 +184,10 @@ export default function Footer() {
         </div>
         <div className="py-10 border-b border-gray-200 grid gap-10 md:grid-cols-2">
           <div>
-            <h6 className="text-sm font-semibold text-gray-900 mb-4">
+            <h6
+              className="text-sm font-semibold mb-4"
+              style={{ color: "#111" }}
+            >
               Payment Methods
             </h6>
             <div className="flex flex-wrap gap-2">
@@ -187,7 +202,10 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h6 className="text-sm font-semibold text-gray-900 mb-4">
+            <h6
+              className="text-sm font-semibold mb-4"
+              style={{ color: "#111" }}
+            >
               Delivery Services
             </h6>
             <div className="flex flex-wrap gap-2">
@@ -204,7 +222,7 @@ export default function Footer() {
         </div>
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-400">
           <div className="flex items-center gap-2 flex-wrap">
-            <span>© {YEAR} PT Mazuta Bima Tek</span>
+            <span>© {YEAR} PT Lunera Bima Tek</span>
             <span className="hidden md:inline">•</span>
             <a href="#" className="hover:text-gray-600">
               Privacy Policy

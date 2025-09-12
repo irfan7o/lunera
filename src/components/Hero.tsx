@@ -83,7 +83,7 @@ export default function Hero() {
             transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={prevSlide}
             aria-label="Previous slide"
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-100 rounded-full p-3 transition-all duration-300 shadow-lg"
+            className="absolute -left-5 md:-left-6 top-1/2 -translate-y-1/2 z-20 bg-white hover:bg-gray-100 rounded-full p-3 transition-all duration-300 shadow-lg"
           >
             <CaretLeft size={20} className="text-gray-800" />
           </motion.button>
@@ -97,7 +97,7 @@ export default function Hero() {
             transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={nextSlide}
             aria-label="Next slide"
-            className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-100 rounded-full p-3 transition-all duration-300 shadow-lg"
+            className="absolute -right-5 md:-right-6 top-1/2 -translate-y-1/2 z-20 bg-white hover:bg-gray-100 rounded-full p-3 transition-all duration-300 shadow-lg"
           >
             <CaretRight size={20} className="text-gray-800" />
           </motion.button>
